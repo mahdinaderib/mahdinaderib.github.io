@@ -4,6 +4,23 @@
     {{ else }}
       animated fadeInDown
     {{ end }}">
+  {{ if eq .Site.Language.Lang "fa" }}
+  <!-- group by jalali year -->
+  {{ $prevYear := "" }}
+  {{ range .Data.Pages.ByDate.Reverse }}
+  {{ $year := trim (partial "jDate.html" (dict "date" .Date "part" "year")) " \n\t" }}
+  {{ if ne $year $prevYear }}
+  <div class="archive__heading">{{ $year }}</div>
+  {{ $prevYear = $year }}
+  {{ end }}
+  <ul class="archive__list">
+    <li class="archive__list-item">
+      <a class="archive__list-title" href="{{ .RelPermalink }}" title="{{ .Title }}">{{ .Title }}</a>
+      <div class="archive__list-date">{{ partial "jDate.html" .Date }}</div>
+    </li>
+  </ul>
+  {{ end }}
+  {{ else }}
   {{ range .Data.Pages.GroupByDate "2006" }}
   <div class="archive__heading">{{ .Key }}</div>
   {{ range .Pages }}
@@ -34,6 +51,7 @@
   </ul>
   {{ end }}
 
+  {{ end }}
   {{ end }}
 </div>
 {{ end }}

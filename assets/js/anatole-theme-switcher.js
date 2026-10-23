@@ -37,14 +37,8 @@ document.addEventListener(
   false,
 );
 
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', switchTheme, false);
-
+// Start in the mode set by `displayMode` (rendered on <html>); only a visitor's own toggle overrides it.
 const currThemeStyle = getStoredThemeStyle();
 if (currThemeStyle) {
   setThemeStyle(currThemeStyle);
-} else {
-  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (userPrefersDark) {
-    setThemeStyle('dark');
-  }
 }

@@ -1,0 +1,7 @@
+# Hugo build output (built in CI)
+public/
+resources/_gen/
+.hugo_build.lock
+
+node_modules/
+*.swp

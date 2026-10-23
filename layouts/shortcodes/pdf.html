@@ -1,0 +1,17 @@
+{{- /* Usage: {{< pdf "file.pdf" >}} — file lives in static/files/. The preview iframe only loads when opened. */ -}}
+{{- $name := strings.TrimPrefix "/" (.Get 0) -}}
+{{- $url := printf "files/%s" $name | absLangURL -}}
+{{- $label := .Get 1 | default "Slides" -}}
+{{- $size := "" -}}
+{{- with os.Stat (printf "static/files/%s" $name) -}}
+  {{- $size = printf " · %.1f MB" (div (float .Size) 1048576) -}}
+{{- end -}}
+<div class="pdf-embed">
+  <a class="pdf-embed__download" href="{{ $url }}" download>
+    <i class="fas fa-file-pdf" aria-hidden="true"></i> Download {{ $label }}<span class="pdf-embed__size">{{ $size }}</span>
+  </a>
+  <details class="pdf-embed__preview" ontoggle="var f=this.querySelector('iframe');if(this.open&&!f.src)f.src=f.dataset.src">
+    <summary>Preview {{ lower $label }}</summary>
+    <iframe data-src="{{ $url }}" title="{{ $label }}: {{ $name }}" loading="lazy"></iframe>
+  </details>
+</div>

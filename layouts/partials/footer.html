@@ -1,12 +1,26 @@
 <footer class="footer footer__{{ .footerClassModifier }}">
-  {{ if eq .Site.Language.Lang "en" }}
-  <p><a href="/fa"><span style="color:#3498db">نسخه فارسی &nbsp;</span></a></p>
-  {{ end }}
+  {{- /* Link to this page's translation if it exists, otherwise to the other language's home */ -}}
+  {{ $page := .context }}
+  <p class="footer__lang">
+    {{ range $page.Sites }}
+    {{ if ne .Language.Lang $page.Language.Lang }}
+    {{ $lang := .Language.Lang }}
+    {{ $href := .Home.RelPermalink }}
+    {{ range $page.Translations }}{{ if eq .Language.Lang $lang }}{{ $href = .RelPermalink }}{{ end }}{{ end }}
+    <a class="footer__lang-link" href="{{ $href }}" hreflang="{{ $lang }}" lang="{{ $lang }}">
+      {{ if eq $lang "fa" }}نسخه فارسی{{ else }}English version{{ end }}
+    </a>
+    {{ end }}
+    {{ end }}
+  </p>
   <ul class="footer__list">
     <li class="footer__item">
       &copy;
       {{ if isset .context.Site.Params "copyright" }}
       {{ replace .context.Site.Params.copyright "{{ YEAR }}" (now.Format "2006") | markdownify }}
+      {{ else if eq .context.Site.Language.Lang "fa" }}
+      {{ .context.Site.Title }}
+      {{ partial "jDate.html" (dict "date" now "part" "year") }}
       {{ else }}
       {{ .context.Site.Params.author }}
       {{ now.Format "2006" }}
@@ -28,8 +42,7 @@
 {{- partial "math.html" .context -}}
 {{- if (hasPrefix .context.Site.GoogleAnalytics "G-") -}}
 {{- template "_internal/google_analytics.html" .context -}}
-{{- else -}}
-{{- template "_internal/google_analytics_async.html" .context -}}
+
 {{- end -}}
 {{- if and (hugo.IsProduction) (.context.Site.Params.gtagId) -}}
 {{ partial "google-analytics-gtag-async.html" .context }}

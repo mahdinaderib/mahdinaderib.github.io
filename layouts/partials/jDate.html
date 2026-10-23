@@ -1,6 +1,12 @@
 <!-- based on https://github.com/majiidd/persiantools/blob/master/persiantools/jdatetime.py -->
 
+<!-- usage: partial "jDate.html" .Date, or (dict "date" .Date "part" "year") for just the jalali year -->
 {{ $time := . }}
+{{ $part := "full" }}
+{{ if reflect.IsMap . }}
+{{ $time = .date }}
+{{ $part = .part | default "full" }}
+{{ end }}
 
 {{ $year := $time.Year | int }}
 {{ $month := $time.Month }}
@@ -43,6 +49,9 @@
 <!-- convert to desired format -->
 {{ $monthNames := slice "فروردین" "اردیبهشت" "خرداد" "تیر" "مرداد" "شهریور" "مهر" "آبان" "آذر" "دی" "بهمن" "اسفند" }}
 {{ $formatted := printf "%02d %s %04d" $jDay (index $monthNames (sub $jMonth 1)) $jYear }}
+{{ if eq $part "year" }}
+{{ $formatted = printf "%04d" $jYear }}
+{{ end }}
 
 <!-- convert to persian digits -->
 {{ $formatted := replace $formatted "0" "۰" }}

@@ -13,13 +13,15 @@ customJs = []
 mainSections = ["post"]
 images = ["images/site-feature-image.png"]
 doNotLoadAnimations = false
+# "light" or "dark": the mode visitors see first (they can still toggle it)
+displayMode = "light"
 # Form Spree Contact Form
 #contactFormAction = "https://formspree.io/f/your-form-hash-here"
 #contactFormReCaptcha = "your-site-key-here"
 # Google Fonts
 #googleFonts = ["Indie+Flower", "Roboto:ital,wght@0,100;0,400;0,700;1,400"]
 # Google Site Verify
-#googleSiteVerify = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+googleSiteVerify = "9CMc9gZeUkzUzxEiAp8lswA4d5qlywLk41IjhsTsGpU"
 singleDateFormat = "2/1/2006"
 indexDateFormat = "2/1/2006"
 listDateFormat = "2/1/2006"
@@ -64,12 +66,12 @@ use = "katex"  # options: "katex", "mathjax". default is "katex".
 [[socialIcons]]
 icon = "fab fa-github"
 title = "GitHub"
-url = "https://github.com/mnaderib/"
+url = "https://github.com/mahdinaderib/"
 
 [[socialIcons]]
 icon = "fab fa-twitter"
 title = "twitter"
-url = "https://www.twitter.com/mnaderib"
+url = "https://www.twitter.com/mahdinaderib"
 
 [[socialIcons]]
 icon = "fas fa-envelope"
